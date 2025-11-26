@@ -1,4 +1,6 @@
 #include "SDL3/SDL.h"
+#include "stb/stb_image.h"
+#include "stb_image.h"
 #include <stdbool.h>
 #include <assert.h>
 
@@ -9,7 +11,7 @@ int main(void)
     assert(window);
     SDL_Renderer *renderer = SDL_CreateRenderer(window, NULL);
     assert(renderer);
-    
+
     bool running = true;
     SDL_Event event;
 

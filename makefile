@@ -10,7 +10,7 @@ DEST_DIR := dest
 TARGET := $(DEST_DIR)/program
 
 # Libraries and includes
-INCLUDES := -I./libs/SDL/include
+INCLUDES := -I./libs/SDL/include -I./libs
 LIBS := -L./dest/bin -lSDL3 -Wl,-rpath,'$$ORIGIN/bin'
 
 # Sources and objects
