@@ -4,8 +4,9 @@
 #include "SDL3/SDL.h"
 #include "stb/stb_image.h"
 
-#include "arena.h"
-#include "function.h"
+#include "utils/arena.h"
+#include "utils/function.h"
+#include "utils/array.h"
 
 int main(void)
 {
