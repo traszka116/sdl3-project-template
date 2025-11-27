@@ -1,55 +1,47 @@
-# Compiler
 CC := gcc
 
-# Directories
 SRC_DIR := src
 BUILD_DIR := build
 DEST_DIR := dest
+INCLUDE_DIR := include
 
-# Executable
 TARGET := $(DEST_DIR)/program
 
-# Libraries and includes
-INCLUDES := -I./libs/SDL/include -I./libs
 LIBS := -L./dest/bin -lSDL3 -Wl,-rpath,'$$ORIGIN/bin'
 
-# Sources and objects
-SRCS := $(wildcard $(SRC_DIR)/*.c)
+SRCS := $(shell find $(SRC_DIR) -name "*.c")
 OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
 
-# Compiler flags
-CFLAGS := -Wall -Wextra -O0   # default: no optimization
+CFLAGS := -Wall -Wextra -O0
+
 ifeq ($(DEBUG),1)
     CFLAGS += -DDEBUG -g -O0
-endif
-
-ifeq ($(RELEASE),1)
+else ifeq ($(RELEASE),1)
     CFLAGS := -Wall -Wextra -O2
 endif
 
-# Default target
+
+INCLUDES := $(shell find $(INCLUDE_DIR) -type d -exec printf -- "-I%s " {} \;) \
+            -I./libs/SDL/include -I./libs
+
 all: $(TARGET)
 
-# Link
 $(TARGET): $(OBJS) | $(DEST_DIR)
 	$(CC) $(OBJS) $(LIBS) -o $@
 
-# Compile each .c to .o
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-# Create build and dest directories if missing
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
 $(DEST_DIR):
 	mkdir -p $(DEST_DIR)
 
-# Clean up object files
 clean:
-	rm -rf $(BUILD_DIR)/*.o
+	rm -rf $(BUILD_DIR)/*
 
-# Optional: clean everything including executable
 fclean: clean
 	rm -f $(TARGET)
 
