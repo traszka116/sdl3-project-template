@@ -1,8 +1,6 @@
-#include <stdbool.h>
-#include <assert.h>
-
-#include "SDL3/SDL.h"
+#define STB_IMAGE_IMPLEMENTATION
 #include "stb/stb_image.h"
+#include "SDL3/SDL.h"
 
 #include "utils/arena.h"
 #include "utils/function.h"
@@ -10,18 +8,16 @@
 
 int main(void)
 {
-    assert(SDL_Init(SDL_INIT_VIDEO));
+    ASSERT(SDL_Init(SDL_INIT_VIDEO));
 
     SDL_Window *window = SDL_CreateWindow("SDL3 Window", 800, 600, 0);
-    assert(window);
+    ASSERT(window);
 
     SDL_Renderer *renderer = SDL_CreateRenderer(window, NULL);
-    assert(renderer);
+    ASSERT(renderer);
 
     bool running = true;
     SDL_Event event;
-
-    arena_t *arena = arena_create(10000);
 
     while (running)
     {
@@ -37,8 +33,6 @@ int main(void)
         SDL_RenderClear(renderer);
         SDL_RenderPresent(renderer);
     }
-
-    arena_destroy(arena);
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);

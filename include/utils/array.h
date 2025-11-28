@@ -31,14 +31,14 @@
     type name##_get(name##_t *array, size_t idx)                          \
     {                                                                     \
         if (idx >= array->size)                                           \
-            panic("out of bounds array access");                          \
+            _panic("out of bounds array access");                          \
         return array->values[idx];                                        \
     }                                                                     \
                                                                           \
     void name##_set(name##_t *array, size_t idx, type val)                \
     {                                                                     \
         if (idx >= array->size)                                           \
-            panic("out of bounds array access");                          \
+            _panic("out of bounds array access");                          \
         array->values[idx] = val;                                         \
     }
 
@@ -69,23 +69,23 @@
     type name##_get(name##_t *array, size_t idx)                                          \
     {                                                                                     \
         if (idx >= array->size)                                                           \
-            panic("out of bounds array access");                                          \
+            _panic("out of bounds array access");                                          \
         if (idx >= array->len)                                                            \
-            warning("reading undefined item");                                            \
+            _warning("reading undefined item");                                            \
         return array->values[idx];                                                        \
     }                                                                                     \
                                                                                           \
     void name##_set(name##_t *array, size_t idx, type val)                                \
     {                                                                                     \
         if (idx >= array->size)                                                           \
-            panic("out of bounds array access");                                          \
+            _panic("out of bounds array access");                                          \
         array->values[idx] = val;                                                         \
     }                                                                                     \
                                                                                           \
     type name##_pop(name##_t *array)                                                      \
     {                                                                                     \
         if (array->len == 0)                                                              \
-            panic("poping empty array");                                                  \
+            _panic("poping empty array");                                                  \
         type val = array->values[array->len];                                             \
         array->len--;                                                                     \
         return val;                                                                       \
@@ -94,7 +94,7 @@
     void name##_push_no_resize(name##_t *array, type val)                                 \
     {                                                                                     \
         if (array->len >= array->size)                                                    \
-            panic("pushing to full array");                                               \
+            _panic("pushing to full array");                                               \
         array->values[array->len] = val;                                                  \
         array->len++;                                                                     \
     }                                                                                     \

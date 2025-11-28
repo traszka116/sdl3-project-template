@@ -7,7 +7,7 @@ INCLUDE_DIR := include
 
 TARGET := $(DEST_DIR)/program
 
-LIBS := -L./dest/bin -lSDL3 -Wl,-rpath,'$$ORIGIN/bin'
+LIBS := -L./dest/bin -lSDL3 -Wl,-rpath,'$$ORIGIN/bin' -lm
 
 SRCS := $(shell find $(SRC_DIR) -name "*.c")
 OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
